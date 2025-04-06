@@ -1,0 +1,28 @@
+{
+  "formTitle": "Registration Form",
+  "packageSelection": "Package Selection",
+  "name": "Name",
+  "surname": "Surname",
+  "streetNumber": "Street Number",
+  "postalCode": "Postal Code",
+  "city": "City",
+  "dateOfBirth": "Date of Birth",
+  "email": "Email",
+  "phoneNumber": "Phone Number",
+  "terminationDate": "Termination Date",
+  "children": "Children",
+  "childName": "Child's Name",
+  "childSurname": "Child's Surname",
+  "childDob": "Child's Date of Birth",
+  "addChild": "Add Child",
+  "ibanSection": "IBAN Section",
+  "iban": {
+    "bank": "Bank",
+    "owner": "Account Holder",
+    "bic": "BIC",
+    "iban": "IBAN",
+    "date": "Date",
+    "signature": "Signature of Account Holder"
+  },
+  "submit": "Submit"
+}

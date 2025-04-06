@@ -1,0 +1,28 @@
+{
+  "formTitle": "Anmeldeformular",
+  "packageSelection": "Paketwahl",
+  "name": "Vorname",
+  "surname": "Nachname",
+  "streetNumber": "Straße und Hausnummer",
+  "postalCode": "Postleitzahl",
+  "city": "Stadt",
+  "dateOfBirth": "Geburtsdatum",
+  "email": "E-Mail",
+  "phoneNumber": "Telefonnummer",
+  "terminationDate": "Kündigung zum",
+  "children": "Kinder",
+  "childName": "Vorname des Kindes",
+  "childSurname": "Nachname des Kindes",
+  "childDob": "Geburtsdatum des Kindes",
+  "addChild": "Kind hinzufügen",
+  "ibanSection": "IBAN Abschnitt",
+  "iban": {
+    "bank": "Geldinstitut",
+    "owner": "Kontoinhaber",
+    "bic": "BIC",
+    "iban": "IBAN",
+    "date": "Datum",
+    "signature": "Unterschrift Kontoinhaber"
+  },
+  "submit": "Absenden"
+}

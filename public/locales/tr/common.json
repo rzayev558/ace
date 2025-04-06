@@ -1,0 +1,28 @@
+{
+  "formTitle": "Kayıt Formu",
+  "packageSelection": "Paket Seçimi",
+  "name": "Ad",
+  "surname": "Soyad",
+  "streetNumber": "Sokak Numarası",
+  "postalCode": "Posta Kodu",
+  "city": "Şehir",
+  "dateOfBirth": "Doğum Tarihi",
+  "email": "E-posta",
+  "phoneNumber": "Telefon Numarası",
+  "terminationDate": "Fesih Tarihi",
+  "children": "Çocuklar",
+  "childName": "Çocuğun Adı",
+  "childSurname": "Çocuğun Soyadı",
+  "childDob": "Çocuğun Doğum Tarihi",
+  "addChild": "Çocuk Ekle",
+  "ibanSection": "IBAN Bölümü",
+  "iban": {
+    "bank": "Banka",
+    "owner": "Hesap Sahibi",
+    "bic": "BIC",
+    "iban": "IBAN",
+    "date": "Tarih",
+    "signature": "Hesap Sahibinin İmzası"
+  },
+  "submit": "Gönder"
+}

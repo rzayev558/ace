@@ -1,103 +1,168 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Select,
+  Space,
+  Divider,
+  Typography
+} from "antd";
 
-export default function Home() {
+const { Option } = Select;
+const { Title } = Typography;
+
+function Home() {
+  const [children, setChildren] = useState([{ id: 1 }]);
+
+  const addChild = () => {
+    if (children.length < 8) {
+      setChildren([...children, { id: Date.now() }]);
+    }
+  };
+
+  const removeChild = (id: number) => {
+    setChildren(children.filter(child => child.id !== id));
+  };
+
+  const onFinish = async(values: unknown) => {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        console.error('Error sending email:', response.statusText);
+        return;
+      }
+    console.log("Form values:", values);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="bg-sky-50 min-h-screen py-8">
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+        <Title level={2} className="text-sky-700 text-center mb-6">Antragsformular</Title>
+        <Form layout="vertical" onFinish={onFinish} className="space-y-6">
+          <div className="bg-sky-100 p-4 rounded-lg">
+            <Form.Item label="Gewähltes Paket" name="package" className="mb-0">
+              <Select className="w-full">
+                <Option value="classic">ACE Classic</Option>
+                <Option value="comfort">ACE Comfort</Option>
+                <Option value="comfortPlus">ACE Comfort Plus</Option>
+              </Select>
+            </Form.Item>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <Divider className="text-sky-700 font-medium">Personal</Divider>
+          <Space direction="vertical" size="middle" className="w-full border border-sky-200 p-6 rounded-lg relative bg-sky-50">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Vorname" name="name">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+              <Form.Item label="Nachname" name="surname">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+            </div>
+            <Form.Item label="Straße und Hausnummer" name="streetNumber">
+              <Input className="hover:border-sky-500 focus:border-sky-500" />
+            </Form.Item>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Postleitzahl" name="postalCode">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+              <Form.Item label="Stadt" name="city">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Geburtsdatum" name="dob">
+                <DatePicker className="w-full hover:border-sky-500 focus:border-sky-500" format="DD.MM.YYYY" />
+              </Form.Item>
+              <Form.Item label="E-Mail" name="email">
+                <Input type="email" className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Telefonnummer" name="phone">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+              <Form.Item label="Kündigungsdatum der Vorversicherung" name="termination">
+                <DatePicker className="w-full hover:border-sky-500 focus:border-sky-500" format="DD.MM.YYYY" />
+              </Form.Item>
+            </div>
+          </Space>
+
+          <Divider className="text-sky-700 font-medium">Kinder</Divider>
+          {children.map((child, index) => (
+            <Space key={child.id} direction="vertical" className="w-full border border-sky-200 p-6 rounded-lg relative bg-sky-50">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Form.Item label={`Vorname Kind ${index + 1}`} name={`child_name_${index}`}>
+                  <Input className="hover:border-sky-500 focus:border-sky-500" />
+                </Form.Item>
+                <Form.Item label={`Nachname Kind ${index + 1}`} name={`child_surname_${index}`}>
+                  <Input className="hover:border-sky-500 focus:border-sky-500" />
+                </Form.Item>
+              </div>
+              <Form.Item label={`Geburtsdatum Kind ${index + 1}`} name={`child_dob_${index}`}>
+                <DatePicker className="w-full hover:border-sky-500 focus:border-sky-500" format="DD.MM.YYYY" />
+              </Form.Item>
+              <div className="flex flex-wrap gap-3 mt-2">
+                <Button danger className="bg-red-50 hover:bg-red-100" onClick={() => removeChild(child.id)}>
+                  Kind entfernen
+                </Button>
+                {children.length < 8 && index === children.length - 1 && (
+                  <Button className="bg-sky-100 text-sky-700 hover:bg-sky-200 border-sky-300" onClick={addChild}>
+                    Kind hinzufügen
+                  </Button>
+                )}
+              </div>
+            </Space>
+          ))}
+
+          <Divider className="text-sky-700 font-medium">IBAN & Zahlungsdaten</Divider>
+          <Space direction="vertical" className="w-full border border-sky-200 p-6 rounded-lg relative bg-sky-50">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Name der Bank" name="bank">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+              <Form.Item label="Kontoinhaber*in" name="owner">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="BIC" name="bic">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+              <Form.Item label="IBAN" name="iban">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+            </div>
+            <Form.Item label="Datum der Einzugsermächtigung" name="iban_date">
+              <DatePicker className="w-full hover:border-sky-500 focus:border-sky-500" format="DD.MM.YYYY" />
+            </Form.Item>
+
+                <Form.Item label="Referrername" name="referred">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+
+                  <Form.Item label="Referrer IBAN" name="referrer_iban">
+                <Input className="hover:border-sky-500 focus:border-sky-500" />
+              </Form.Item>
+
+            <Form.Item className="mt-6">
+              <Button type="primary" htmlType="submit" className="bg-sky-600 hover:bg-sky-700 border-sky-600 w-full md:w-auto px-8 h-10 font-medium">
+                Absenden
+              </Button>
+            </Form.Item>
+          </Space>
+        </Form>
+      </div>
     </div>
   );
 }
+
+export default Home;
